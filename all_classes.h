@@ -8,8 +8,8 @@ class Printable
 public:
     virtual ~Printable() = default;
 
-    virtual std::string printAsHTML() const = 0; //_____________________________ FAT INTERFACE: INTERFACE SEGREGATION PRICIPLE BROKEN
-    virtual std::string printAsText() const = 0; //_____________________________ REASON: PARENT CLASS TRIES TO CONTAIN METHOD REALISATIONS FOR ALL DERIVED CLASSES
+    virtual std::string printAsHTML() const = 0; //________________ FAT INTERFACE: INTERFACE SEGREGATION PRICIPLE BROKEN
+    virtual std::string printAsText() const = 0; //________________ REASON: PARENT CLASS TRIES TO CONTAIN METHOD REALISATIONS FOR ALL DERIVED CLASSES
     virtual std::string printAsJSON() const = 0;
 };
 
@@ -29,9 +29,9 @@ public:
     std::string printAsHTML() const override
     {
         if (format_ != Format::kHTML) {
-            throw std::runtime_error("Invalid format!");//_______________________LESKOV PRICIPLE BROKEN
+            throw std::runtime_error("Invalid format!");//__________LESKOV PRICIPLE BROKEN
         }
-        return "<html>" + data_ + "<html/>";            //_______________________REASON: USE OF DERIVED CLASSES MAY LEAD RO EXCEPTION THROWN
+        return "<html>" + data_ + "<html/>";            //__________REASON: USE OF DERIVED CLASSES MAY LEAD TO EXCEPTION THROWN
     }
     std::string printAsText() const override
     {
@@ -55,8 +55,8 @@ private:
 
 void saveTo(std::ofstream &file, const Printable& printable, Data::Format format)
 {
-    switch (format) //____________________________________________________________ OPEN-CLOSED PRINCIPLE BROKEN
-    {               //____________________________________________________________ REASON: ADDING NEW FORMATS WILL NECESSITATE CHANGING SWITCH-CASE CONSTRUCTION
+    switch (format) //_______________________________________________ OPEN-CLOSED PRINCIPLE BROKEN
+    {               //_______________________________________________ REASON: ADDING NEW FORMATS WILL NECESSITATE CHANGING SWITCH-CASE CONSTRUCTION
     case Data::Format::kText:
         file << printable.printAsText();
         break;
