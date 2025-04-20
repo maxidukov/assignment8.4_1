@@ -8,8 +8,8 @@ class Printable
 public:
     virtual ~Printable() = default;
 
-    virtual std::string printAsHTML() const = 0;
-    virtual std::string printAsText() const = 0;
+    virtual std::string printAsHTML() const = 0; //_________________________________________________________________________ FAT INTERFACE: INTERFACE SEGREGATION PRICIPLE BROKEN
+    virtual std::string printAsText() const = 0; //_________________________________________________________________________ REASON: PARENT CLASS TRIES TO CONTAIN METHOD REALISATIONS FOR ALL DERIVED CLASSES
     virtual std::string printAsJSON() const = 0;
 };
 
@@ -29,9 +29,9 @@ public:
     std::string printAsHTML() const override
     {
         if (format_ != Format::kHTML) {
-            throw std::runtime_error("Invalid format!");
+            throw std::runtime_error("Invalid format!");//___________________________________________________________________LESKOV PRICIPLE BROKEN
         }
-        return "<html>" + data_ + "<html/>";
+        return "<html>" + data_ + "<html/>";            //___________________________________________________________________REASON: USE OF DERIVED CLASSES MAY LEAD RO EXCEPTION THROWN
     }
     std::string printAsText() const override
     {
@@ -55,8 +55,8 @@ private:
 
 void saveTo(std::ofstream &file, const Printable& printable, Data::Format format)
 {
-    switch (format)
-    {
+    switch (format) //__________________________________________________________________________________________________________ OPEN-CLOSED PRINCIPLE BROKEN
+    {               //__________________________________________________________________________________________________________ REASON: ADDING NEW FORMATS WILL NECESSITATE CHANGING SWITCH-CASE CONSTRUCTION
     case Data::Format::kText:
         file << printable.printAsText();
         break;
